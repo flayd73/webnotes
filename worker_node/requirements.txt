@@ -1,0 +1,8 @@
+celery
+redis
+openai-whisper
+transformers
+torch
+PyMuPDF
+scikit-learn
+reportlab
