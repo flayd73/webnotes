@@ -1,3 +1,5 @@
+# scripts/subject_detection.py
+
 import os
 
 def detect_subject_and_topic(transcript):
@@ -103,6 +105,7 @@ def detect_subject_and_topic(transcript):
     return None, "General"
 
 def find_syllabus(subject, resources_path):
+    # Search for the syllabus file in the resources folder
     for file_name in os.listdir(resources_path):
         if subject.lower() in file_name.lower() and file_name.lower().endswith(".pdf"):
             return os.path.join(resources_path, file_name)

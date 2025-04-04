@@ -1,4 +1,4 @@
-# tasks_shared.py
+# worker_node/tasks.py
 
 from celery import Celery
 import os
@@ -12,8 +12,7 @@ from transformers import PegasusTokenizer, PegasusForConditionalGeneration
 import torch
 import whisper
 
-# Initialize Celery app
-app = Celery('tasks_shared', broker='redis://localhost:6379/0')
+app = Celery('tasks', broker='redis://central_server_ip:6379/0', backend='redis://central_server_ip:6379/0')
 
 # Load models globally
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -29,7 +28,7 @@ pegasus_model = PegasusForConditionalGeneration.from_pretrained(pegasus_model_na
 @app.task(bind=True, max_retries=3)
 def process_audio_file(self, filename):
     try:
-        # Paths to shared directories
+        # Paths to shared directories (adjust paths accordingly)
         upload_dir = 'uploads'
         processed_dir = 'processed'
 
@@ -66,7 +65,6 @@ def process_audio_file(self, filename):
         # Generate PDF
         generate_pdf(summary, output_path)
 
-        # Move the processed file to 'processed' directory
         # Optionally, remove the original file from 'uploads' directory
         os.remove(file_path)
 

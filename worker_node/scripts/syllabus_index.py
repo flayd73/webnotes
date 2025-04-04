@@ -1,3 +1,5 @@
+# scripts/syllabus_index.py
+
 import fitz  # PyMuPDF
 from sklearn.feature_extraction.text import TfidfVectorizer
 import os
